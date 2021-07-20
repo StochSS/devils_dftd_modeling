@@ -1,0 +1,24 @@
+{
+    "parameterSweepSettings": {
+        "parameters": [],
+        "speciesOfInterest": {}
+    },
+    "resultsSettings": {
+        "mapper": "final",
+        "outputs": [],
+        "reducer": "avg"
+    },
+    "simulationSettings": {
+        "absoluteTol": 1e-06,
+        "algorithm": "Hybrid-Tau-Leaping",
+        "isAutomatic": false,
+        "realizations": 1,
+        "relativeTol": 0.001,
+        "seed": -1,
+        "tauTol": 0.03
+    },
+    "timespanSettings": {
+        "endSim": 20,
+        "timeStep": 0.05
+    }
+}

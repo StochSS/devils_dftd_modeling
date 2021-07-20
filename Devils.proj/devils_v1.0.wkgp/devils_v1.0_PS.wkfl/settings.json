@@ -1,0 +1,56 @@
+{
+    "model": "documents/Devils.proj/devils_v1.0.wkgp/devils_v1.0.mdl",
+    "settings": {
+        "parameterSweepSettings": {
+            "parameters": [
+                {
+                    "hasChangedRange": true,
+                    "max": 1,
+                    "min": 0.1,
+                    "name": "p",
+                    "paramID": 18,
+                    "steps": 10
+                },
+                {
+                    "hasChangedRange": true,
+                    "max": 1,
+                    "min": 0.25,
+                    "name": "vf",
+                    "paramID": 29,
+                    "steps": 4
+                }
+            ],
+            "speciesOfInterest": {
+                "annotation": "",
+                "compID": 1,
+                "diffusionConst": 0,
+                "isSwitchTol": true,
+                "mode": "discrete",
+                "name": "S",
+                "switchMin": 100,
+                "switchTol": 0.03,
+                "types": [],
+                "value": 157
+            }
+        },
+        "resultsSettings": {
+            "mapper": "final",
+            "outputs": [],
+            "reducer": "avg"
+        },
+        "simulationSettings": {
+            "absoluteTol": 1e-06,
+            "algorithm": "Hybrid-Tau-Leaping",
+            "isAutomatic": false,
+            "realizations": 3,
+            "relativeTol": 0.001,
+            "seed": -1,
+            "tauTol": 0.03
+        },
+        "timespanSettings": {
+            "endSim": 20,
+            "timeStep": 0.05
+        }
+    },
+    "type": "Parameter Sweep"
+}
