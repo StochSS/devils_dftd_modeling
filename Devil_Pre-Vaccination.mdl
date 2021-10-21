@@ -1,0 +1,445 @@
+{
+    "annotation": "",
+    "defaultID": 18,
+    "defaultMode": "discrete",
+    "eventsCollection": [
+        {
+            "annotation": "",
+            "compID": 17,
+            "delay": null,
+            "eventAssignments": [
+                {
+                    "expression": "round(S * 0.001)",
+                    "variable": {
+                        "annotation": "",
+                        "compID": 3,
+                        "diffusionConst": 0,
+                        "isSwitchTol": true,
+                        "mode": "discrete",
+                        "name": "I",
+                        "switchMin": 0,
+                        "switchTol": 0.03,
+                        "types": [],
+                        "value": 0
+                    }
+                },
+                {
+                    "expression": "round(S * 0.999)",
+                    "variable": {
+                        "annotation": "",
+                        "compID": 1,
+                        "diffusionConst": 0,
+                        "isSwitchTol": true,
+                        "mode": "discrete",
+                        "name": "S",
+                        "switchMin": 0,
+                        "switchTol": 0.03,
+                        "types": [],
+                        "value": 34616
+                    }
+                }
+            ],
+            "initialValue": false,
+            "name": "dftd",
+            "persistent": false,
+            "priority": "0",
+            "triggerExpression": "t >= 132",
+            "useValuesFromTriggerTime": false
+        }
+    ],
+    "functionDefinitions": [],
+    "initialConditions": [],
+    "is_spatial": false,
+    "modelSettings": {
+        "endSim": 420,
+        "timeStep": 0.997624703087886
+    },
+    "parameters": [
+        {
+            "annotation": "",
+            "compID": 5,
+            "expression": "0.029",
+            "name": "r"
+        },
+        {
+            "annotation": "",
+            "compID": 6,
+            "expression": "61874.126205199995",
+            "name": "K"
+        },
+        {
+            "annotation": "",
+            "compID": 7,
+            "expression": "0.0048",
+            "name": "ds"
+        },
+        {
+            "annotation": "",
+            "compID": 8,
+            "expression": "0.044",
+            "name": "dI"
+        },
+        {
+            "annotation": "",
+            "compID": 9,
+            "expression": "27.39",
+            "name": "L"
+        },
+        {
+            "annotation": "",
+            "compID": 10,
+            "expression": "0.48",
+            "name": "k0"
+        }
+    ],
+    "reactions": [
+        {
+            "annotation": "",
+            "compID": 11,
+            "massaction": false,
+            "name": "birth",
+            "products": [
+                {
+                    "ratio": 1,
+                    "specie": {
+                        "annotation": "",
+                        "compID": 1,
+                        "diffusionConst": 0,
+                        "isSwitchTol": true,
+                        "mode": "discrete",
+                        "name": "S",
+                        "switchMin": 0,
+                        "switchTol": 0.03,
+                        "types": [],
+                        "value": 34616
+                    }
+                },
+                {
+                    "ratio": 1,
+                    "specie": {
+                        "annotation": "",
+                        "compID": 4,
+                        "diffusionConst": 0,
+                        "isSwitchTol": true,
+                        "mode": "discrete",
+                        "name": "Devils",
+                        "switchMin": 0,
+                        "switchTol": 0.03,
+                        "types": [],
+                        "value": 34616
+                    }
+                }
+            ],
+            "propensity": "((r*((S+E)+I))*(1-(((S+E)+I)/K)))",
+            "rate": {},
+            "reactants": [],
+            "reactionType": "custom-propensity",
+            "summary": "\\emptyset \\rightarrow S+Devils",
+            "types": []
+        },
+        {
+            "annotation": "",
+            "compID": 12,
+            "massaction": false,
+            "name": "death_S",
+            "products": [],
+            "propensity": "(ds*S)",
+            "rate": {},
+            "reactants": [
+                {
+                    "ratio": 1,
+                    "specie": {
+                        "annotation": "",
+                        "compID": 1,
+                        "diffusionConst": 0,
+                        "isSwitchTol": true,
+                        "mode": "discrete",
+                        "name": "S",
+                        "switchMin": 0,
+                        "switchTol": 0.03,
+                        "types": [],
+                        "value": 34616
+                    }
+                },
+                {
+                    "ratio": 1,
+                    "specie": {
+                        "annotation": "",
+                        "compID": 4,
+                        "diffusionConst": 0,
+                        "isSwitchTol": true,
+                        "mode": "discrete",
+                        "name": "Devils",
+                        "switchMin": 0,
+                        "switchTol": 0.03,
+                        "types": [],
+                        "value": 34616
+                    }
+                }
+            ],
+            "reactionType": "custom-propensity",
+            "summary": "S+Devils \\rightarrow \\emptyset",
+            "types": []
+        },
+        {
+            "annotation": "",
+            "compID": 13,
+            "massaction": false,
+            "name": "transmission",
+            "products": [
+                {
+                    "ratio": 1,
+                    "specie": {
+                        "annotation": "",
+                        "compID": 2,
+                        "diffusionConst": 0,
+                        "isSwitchTol": true,
+                        "mode": "discrete",
+                        "name": "E",
+                        "switchMin": 0,
+                        "switchTol": 0.03,
+                        "types": [],
+                        "value": 0
+                    }
+                },
+                {
+                    "ratio": 1,
+                    "specie": {
+                        "annotation": "",
+                        "compID": 3,
+                        "diffusionConst": 0,
+                        "isSwitchTol": true,
+                        "mode": "discrete",
+                        "name": "I",
+                        "switchMin": 0,
+                        "switchTol": 0.03,
+                        "types": [],
+                        "value": 0
+                    }
+                }
+            ],
+            "propensity": "(((k0*S)*I)/K)",
+            "rate": {},
+            "reactants": [
+                {
+                    "ratio": 1,
+                    "specie": {
+                        "annotation": "",
+                        "compID": 1,
+                        "diffusionConst": 0,
+                        "isSwitchTol": true,
+                        "mode": "discrete",
+                        "name": "S",
+                        "switchMin": 0,
+                        "switchTol": 0.03,
+                        "types": [],
+                        "value": 34616
+                    }
+                },
+                {
+                    "ratio": 1,
+                    "specie": {
+                        "annotation": "",
+                        "compID": 3,
+                        "diffusionConst": 0,
+                        "isSwitchTol": true,
+                        "mode": "discrete",
+                        "name": "I",
+                        "switchMin": 0,
+                        "switchTol": 0.03,
+                        "types": [],
+                        "value": 0
+                    }
+                }
+            ],
+            "reactionType": "custom-propensity",
+            "summary": "S+I \\rightarrow E+I",
+            "types": []
+        },
+        {
+            "annotation": "",
+            "compID": 14,
+            "massaction": false,
+            "name": "death_E",
+            "products": [],
+            "propensity": "(ds*E)",
+            "rate": {},
+            "reactants": [
+                {
+                    "ratio": 1,
+                    "specie": {
+                        "annotation": "",
+                        "compID": 4,
+                        "diffusionConst": 0,
+                        "isSwitchTol": true,
+                        "mode": "discrete",
+                        "name": "Devils",
+                        "switchMin": 0,
+                        "switchTol": 0.03,
+                        "types": [],
+                        "value": 34616
+                    }
+                },
+                {
+                    "ratio": 1,
+                    "specie": {
+                        "annotation": "",
+                        "compID": 2,
+                        "diffusionConst": 0,
+                        "isSwitchTol": true,
+                        "mode": "discrete",
+                        "name": "E",
+                        "switchMin": 0,
+                        "switchTol": 0.03,
+                        "types": [],
+                        "value": 0
+                    }
+                }
+            ],
+            "reactionType": "custom-propensity",
+            "summary": "Devils+E \\rightarrow \\emptyset",
+            "types": []
+        },
+        {
+            "annotation": "",
+            "compID": 15,
+            "massaction": false,
+            "name": "latency",
+            "products": [
+                {
+                    "ratio": 1,
+                    "specie": {
+                        "annotation": "",
+                        "compID": 3,
+                        "diffusionConst": 0,
+                        "isSwitchTol": true,
+                        "mode": "discrete",
+                        "name": "I",
+                        "switchMin": 0,
+                        "switchTol": 0.03,
+                        "types": [],
+                        "value": 0
+                    }
+                }
+            ],
+            "propensity": "(E/L)",
+            "rate": {},
+            "reactants": [
+                {
+                    "ratio": 1,
+                    "specie": {
+                        "annotation": "",
+                        "compID": 2,
+                        "diffusionConst": 0,
+                        "isSwitchTol": true,
+                        "mode": "discrete",
+                        "name": "E",
+                        "switchMin": 0,
+                        "switchTol": 0.03,
+                        "types": [],
+                        "value": 0
+                    }
+                }
+            ],
+            "reactionType": "custom-propensity",
+            "summary": "E \\rightarrow I",
+            "types": []
+        },
+        {
+            "annotation": "",
+            "compID": 16,
+            "massaction": false,
+            "name": "death_I",
+            "products": [],
+            "propensity": "(dI*I)",
+            "rate": {},
+            "reactants": [
+                {
+                    "ratio": 1,
+                    "specie": {
+                        "annotation": "",
+                        "compID": 3,
+                        "diffusionConst": 0,
+                        "isSwitchTol": true,
+                        "mode": "discrete",
+                        "name": "I",
+                        "switchMin": 0,
+                        "switchTol": 0.03,
+                        "types": [],
+                        "value": 0
+                    }
+                },
+                {
+                    "ratio": 1,
+                    "specie": {
+                        "annotation": "",
+                        "compID": 4,
+                        "diffusionConst": 0,
+                        "isSwitchTol": true,
+                        "mode": "discrete",
+                        "name": "Devils",
+                        "switchMin": 0,
+                        "switchTol": 0.03,
+                        "types": [],
+                        "value": 34616
+                    }
+                }
+            ],
+            "reactionType": "custom-propensity",
+            "summary": "I+Devils \\rightarrow \\emptyset",
+            "types": []
+        }
+    ],
+    "rules": [],
+    "species": [
+        {
+            "annotation": "",
+            "compID": 1,
+            "diffusionConst": 0,
+            "isSwitchTol": true,
+            "mode": "discrete",
+            "name": "S",
+            "switchMin": 0,
+            "switchTol": 0.03,
+            "types": [],
+            "value": 34616
+        },
+        {
+            "annotation": "",
+            "compID": 2,
+            "diffusionConst": 0,
+            "isSwitchTol": true,
+            "mode": "discrete",
+            "name": "E",
+            "switchMin": 0,
+            "switchTol": 0.03,
+            "types": [],
+            "value": 0
+        },
+        {
+            "annotation": "",
+            "compID": 3,
+            "diffusionConst": 0,
+            "isSwitchTol": true,
+            "mode": "discrete",
+            "name": "I",
+            "switchMin": 0,
+            "switchTol": 0.03,
+            "types": [],
+            "value": 0
+        },
+        {
+            "annotation": "",
+            "compID": 4,
+            "diffusionConst": 0,
+            "isSwitchTol": true,
+            "mode": "discrete",
+            "name": "Devils",
+            "switchMin": 0,
+            "switchTol": 0.03,
+            "types": [],
+            "value": 34616
+        }
+    ],
+    "volume": 1
+}
