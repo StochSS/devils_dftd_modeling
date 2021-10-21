@@ -24,7 +24,7 @@
                     }
                 },
                 {
-                    "expression": "round(S * 0.999)",
+                    "expression": "round(S * 1-0.001)",
                     "variable": {
                         "annotation": "",
                         "compID": 1,
