@@ -1,6 +1,7 @@
 # devils_dftd_modeling
 
-## Open Links (links may fail due to out dated github tokens)
+## Open Links
+ > Open links may fail due to out dated github tokens
 
 ### DFTD Pre-Vaccination
  - [Devils DFTD Parameter Approxamation.ipynb](https://open.stochss.org?open=https://raw.githubusercontent.com/StochSS/devils_dftd_modeling/develop/Devils%20DFTD%20Parameter%20Approxamation.ipynb?token=AKUOBDXPODN7MZ3GE7U5CITBPACAW)
