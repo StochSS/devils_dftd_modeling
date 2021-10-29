@@ -9,3 +9,4 @@
 
 ### DFTD Vaccination
  - [Devils DFTD Vaccination.mdl](https://open.stochss.org?open=https://raw.githubusercontent.com/StochSS/devils_dftd_modeling/develop/Devils%20DFTD%20Vaccination.mdl?token=AKUOBDWHJR2HZS4FQYLWNQ3BPACIM)
+ - [Devils DFTD Vaccination.ipynb](https://open.stochss.org?open=https://raw.githubusercontent.com/StochSS/devils_dftd_modeling/develop/Devils%20DFTD%20Vaccination.ipynb?token=AKUOBDQ6RDQVNZZRWMXQM5TBPPXVE)
