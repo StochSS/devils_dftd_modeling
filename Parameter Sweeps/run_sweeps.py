@@ -40,7 +40,9 @@ def run(f, nb):
 def run_notebooks(run_dir):
 	for root, dirs, files in os.walk(run_dir):
 		for file in files:
-			if file.endswith(".ipynb"):
+			if file in ["Devils DFTD 2-Stage Infection with Immunity and Culling.ipynb",
+					"Devils DFTD 2-Stage Infection with Immunity and Vaccination.ipynb",
+					"Devils DFTD 2-Stage Infection with Immunity, Vaccination, and Culling.ipynb"]:
 				with open(os.path.join(root, file)) as f:
 					print('Reading {}...'.format(file))
 					notebooks[file] = nbformat.read(f, as_version=nbformat.NO_CONVERT)
