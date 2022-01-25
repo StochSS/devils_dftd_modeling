@@ -55,7 +55,7 @@ def run_notebooks(run_dir):
 		print(f'starting {j}')
 		j.start()
 	for j in jobs:
-		print('joining {j}')
+		print(f'joining {j}')
 		j.join()
 
 
