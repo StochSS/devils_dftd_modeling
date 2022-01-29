@@ -126,7 +126,7 @@ def main():
     all_space = []
     for ps_vec in ittr_parameter_space():
         all_space.append(",".join([str(x) for x in ps_vec]))
-    with Pool(5) as p:
+    with Pool(35) as p:
         p.map(run_parameter_point, all_space )
 
 
