@@ -55,13 +55,13 @@ def get_variables(ps_vec):
         
 
 def ittr_parameter_space():
-    cnt = 0
+    #cnt = 0
     space = generate_parameter_space()
     vec = [0]*len(space)
     while True:
         yield vec
-        cnt+=1
-        if cnt>5: return False
+        #cnt+=1
+        #if cnt>5: return False
         i=0
         keep_updating=True
         while keep_updating:
@@ -86,7 +86,6 @@ def run_parameter_point(ps_vec_str):
     with open(filename + ".vars", "wb") as fd:
        pickle.dump(variables,fd)
 
-    return
 
     tic=time.time()
     model = DevilsDFTD2StageInfectionVaccinationCullingImmunity(values=variables)
@@ -130,7 +129,7 @@ def main():
     all_space = []
     for ps_vec in ittr_parameter_space():
         all_space.append(",".join([str(x) for x in ps_vec]))
-    with Pool(5) as p:
+    with Pool(35) as p:
         p.map(run_parameter_point, all_space )
 
 
