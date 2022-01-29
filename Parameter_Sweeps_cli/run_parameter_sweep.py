@@ -77,8 +77,6 @@ def ittr_parameter_space():
 
 def run_parameter_point(ps_vec_str):
     ps_vec = [ int(x) for x in ps_vec_str.split(",")]
-    #print(f"run_parameter_point(ps_vec={ps_vec})")
-    #return
     filename = f"dftd_ps-" + ",".join([str(x) for x in ps_vec])
     variables =  get_variables(ps_vec)
     if exists(filename + ".vars"):
@@ -86,7 +84,6 @@ def run_parameter_point(ps_vec_str):
     with open(filename + ".vars", "wb") as fd:
        pickle.dump(variables,fd)
 
-    return
     tic=time.time()
     model = DevilsDFTD2StageInfectionVaccinationCullingImmunity(values=variables)
     solver = TauHybridCSolver(model=model, variable=True)
