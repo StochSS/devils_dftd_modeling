@@ -60,7 +60,7 @@ def ittr_parameter_space():
     vec = [0]*len(space)
     while True:
         yield vec
-        cnt+=1
+        #cnt+=1
         #if cnt>5: return False
         #i=0
         keep_updating=True
