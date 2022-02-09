@@ -1,0 +1,57 @@
+{
+    "elimination_probs": {
+        "immunity_start:384,immunity_growth_rate:0.0075,immunity_max_level:100": 79,
+        "immunity_start:384,immunity_growth_rate:0.0075,immunity_max_level:50": 0,
+        "immunity_start:384,immunity_growth_rate:0.0075,immunity_max_level:75": 0,
+        "immunity_start:384,immunity_growth_rate:0.01,immunity_max_level:100": 100,
+        "immunity_start:384,immunity_growth_rate:0.01,immunity_max_level:50": 0,
+        "immunity_start:384,immunity_growth_rate:0.01,immunity_max_level:75": 0,
+        "immunity_start:384,immunity_growth_rate:0.0125,immunity_max_level:100": 100,
+        "immunity_start:384,immunity_growth_rate:0.0125,immunity_max_level:50": 0,
+        "immunity_start:384,immunity_growth_rate:0.0125,immunity_max_level:75": 0,
+        "immunity_start:444,immunity_growth_rate:0.0075,immunity_max_level:100": 9,
+        "immunity_start:444,immunity_growth_rate:0.0075,immunity_max_level:50": 0,
+        "immunity_start:444,immunity_growth_rate:0.0075,immunity_max_level:75": 0,
+        "immunity_start:444,immunity_growth_rate:0.01,immunity_max_level:100": 95,
+        "immunity_start:444,immunity_growth_rate:0.01,immunity_max_level:50": 0,
+        "immunity_start:444,immunity_growth_rate:0.01,immunity_max_level:75": 0,
+        "immunity_start:444,immunity_growth_rate:0.0125,immunity_max_level:100": 100,
+        "immunity_start:444,immunity_growth_rate:0.0125,immunity_max_level:50": 0,
+        "immunity_start:444,immunity_growth_rate:0.0125,immunity_max_level:75": 0,
+        "immunity_start:504,immunity_growth_rate:0.0075,immunity_max_level:100": 0,
+        "immunity_start:504,immunity_growth_rate:0.0075,immunity_max_level:50": 0,
+        "immunity_start:504,immunity_growth_rate:0.0075,immunity_max_level:75": 0,
+        "immunity_start:504,immunity_growth_rate:0.01,immunity_max_level:100": 70,
+        "immunity_start:504,immunity_growth_rate:0.01,immunity_max_level:50": 0,
+        "immunity_start:504,immunity_growth_rate:0.01,immunity_max_level:75": 0,
+        "immunity_start:504,immunity_growth_rate:0.0125,immunity_max_level:100": 98,
+        "immunity_start:504,immunity_growth_rate:0.0125,immunity_max_level:50": 0,
+        "immunity_start:504,immunity_growth_rate:0.0125,immunity_max_level:75": 0
+    },
+    "parameters": [
+        {
+            "name": "immunity_start",
+            "range": [
+                384,
+                444,
+                504
+            ]
+        },
+        {
+            "name": "immunity_growth_rate",
+            "range": [
+                0.0075,
+                0.01,
+                0.0125
+            ]
+        },
+        {
+            "name": "immunity_max_level",
+            "range": [
+                50,
+                75,
+                100
+            ]
+        }
+    ]
+}
