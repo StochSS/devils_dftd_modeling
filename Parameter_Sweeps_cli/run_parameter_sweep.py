@@ -79,7 +79,7 @@ def run_parameter_point(ps_vec_str):
     ps_vec = [ int(x) for x in ps_vec_str.split(",")]
     filename = f"dftd_ps-" + ",".join([str(x) for x in ps_vec])
     variables =  get_variables(ps_vec)
-    if exists(filename + ".vars"):
+    if exists(filename + ".elimination"):
         print(f"found {filename}.vars, skipping")
     with open(filename + ".vars", "wb") as fd:
        pickle.dump(variables,fd)
@@ -87,7 +87,7 @@ def run_parameter_point(ps_vec_str):
     tic=time.time()
     model = DevilsDFTD2StageInfectionVaccinationCullingImmunity(values=variables)
     solver = TauHybridCSolver(model=model, variable=True)
-    results = []
+    #results = []
     ext_count = 0
     erd_count = 0
     for _ in range(100):
@@ -100,7 +100,7 @@ def run_parameter_point(ps_vec_str):
             result = model.run(solver=solver, number_of_trajectories=1, variables=variables)
         print(".",end='')
         sys.stdout.flush()
-        results.append(result)
+        #results.append(result)
         Dftd = result['Infected'] + result['Exposed'] + result['Diseased']
         if min(Dftd[400:]) == 0.0:
             erd_count += 1
@@ -110,8 +110,8 @@ def run_parameter_point(ps_vec_str):
 
     with open(filename+".elimination","w") as fd:
         fd.write(str(erd_count))
-    with open(filename+".results","wb") as fd:
-        pickle.dump(results,fd)
+    #with open(filename+".results","wb") as fd:
+    #    pickle.dump(results,fd)
     #print(f"done in {time.time()-tic}s")
     #print(f"DFTD elimination: {erd_count}%")
     #print(f"Devil extinction: {ext_count}%")
@@ -126,7 +126,7 @@ def main():
     all_space = []
     for ps_vec in ittr_parameter_space():
         all_space.append(",".join([str(x) for x in ps_vec]))
-    with Pool(35) as p:
+    with Pool(60) as p:
         p.map(run_parameter_point, all_space )
 
 
