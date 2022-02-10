@@ -13,15 +13,20 @@ import pickle
 from DevilsDFTD2StageInfection import DevilsPreVaccination
 
 type_variables = {
+    "juvenile_concentration": float,
+    "birth_rate": float,
+    "maturity_rate": float,
+    "death_rate_juvenile": float,
+    "death_rate_susceptible": float,
+    "death_rate_over_population": float,
     "infection_rate_infected": float,
     "infection_rate_diseased": float,
-    "incubation": int,
-    "progression": int,
+    "incubation": float,
+    "progression": float,
     "death_rate_infected": float,
     "death_rate_diseased": float,
-    "DFTD_start": int,
+    "DFTD_start": float,
 }
-
 def get_variables():
     ''' take the string from argv and set variables'''
     variables={}
@@ -44,12 +49,22 @@ def get_variables():
     print(f"sweeps = {sweeps}") 
     return (variables,sweeps)
 
+#def make_filename(variables):
+#    ret = os.path.dirname(__file__)+'/ps-'
+#    for k in sorted(variables.keys()):
+#        ret+=f"{variables[k]},"
+#    return ret
 def make_filename(variables):
-    ret = os.path.dirname(__file__)+'/ps-'
+    cmdpath="/home/brian/research/devils_dftd_modeling/Parameter_Sweeps_ssh/"
+    ret = cmdpath+'/ps-'
     for k in sorted(variables.keys()):
-        ret+=f"{variables[k]},"
+        v = type_variables[k](variables[k])
+        if type_variables[k]==int:
+            x = str(v)
+        else:
+            x = f"{v:.4e}"
+        ret+=f"{x},"
     return ret
-
 
 
 def run_parameter_point(variables):
