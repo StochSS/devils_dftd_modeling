@@ -145,20 +145,24 @@ class DevilsPreVaccination(Model):
         # Timespan
         self.timespan(np.arange(0, 421, 1)) # month data tspan
         
-    def run(self, number_of_trajectories=500):
+    def run(self, number_of_trajectories=500, verbose=False, with_DFTD=True):
+
+        if not with_DFTD:
+            self.delete_all_events()
+
         solver = TauHybridCSolver()
         needed_num = number_of_trajectories
         num = 0
         ret_traj=[]
         while(num < needed_num):
             n = min(100,(needed_num-num))
-            #print(f"Running {n} trajectories", end=' ')
+            if verbose: print(f"Running {n} trajectories", end=' ')
             sys.stdout.flush()
             tic=time.time()
             results = super().run(number_of_trajectories=n, solver=solver, seed=random.randint(0,2**31-1))
-            #print(f" complete in {time.time()-tic}s")
+            if verbose: print(f" complete in {time.time()-tic}s")
             for r in results:
-                if (r['Exposed'][-1] + r['Infected'][-1] + r['Diseased'][-1]) > 0:
+                if not with_DFTD or (r['Exposed'][-1] + r['Infected'][-1] + r['Diseased'][-1]) > 0:
                     ret_traj.append(r)
                     num+=1
             
