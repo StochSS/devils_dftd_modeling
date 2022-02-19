@@ -145,7 +145,7 @@ class DevilsPreVaccination(Model):
         # Timespan
         self.timespan(np.arange(0, 421, 1)) # month data tspan
         
-    def run(self, number_of_trajectories=500, verbose=False, with_DFTD=True):
+    def run(self, number_of_trajectories=1000, verbose=False, with_DFTD=True):
 
         if not with_DFTD:
             self.delete_all_events()
