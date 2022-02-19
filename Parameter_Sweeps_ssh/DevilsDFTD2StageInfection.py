@@ -145,7 +145,7 @@ class DevilsPreVaccination(Model):
         # Timespan
         self.timespan(np.arange(0, 421, 1)) # month data tspan
         
-    def run(self, number_of_trajectories=500):
+    def run(self, number_of_trajectories=1000):
         solver = TauHybridCSolver()
         needed_num = number_of_trajectories
         num = 0

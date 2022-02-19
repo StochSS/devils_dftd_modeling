@@ -79,8 +79,8 @@ def run_parameter_point(variables):
 
     with open(filename+".m","w") as fd:
         fd.write(str(m)+','+str(s))
-    with open(filename+".p","wb") as fd:
-        pickle.dump(results,fd)
+    #with open(filename+".p","wb") as fd:
+    #    pickle.dump(results,fd)
 
 
 def generate_all_space():
