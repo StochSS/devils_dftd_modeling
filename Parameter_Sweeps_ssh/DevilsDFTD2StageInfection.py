@@ -160,11 +160,14 @@ class DevilsPreVaccination(Model):
             sys.stdout.flush()
             tic=time.time()
             results = super().run(number_of_trajectories=n, solver=solver, seed=random.randint(0,2**31-1))
-            if verbose: print(f" complete in {time.time()-tic}s")
+            accepted=0
             for r in results:
                 if not with_DFTD or (r['Exposed'][-1] + r['Infected'][-1] + r['Diseased'][-1]) > 0:
                     ret_traj.append(r)
                     num+=1
+                    accepted+=1
+            if verbose: print(f" {accepted} accepted", end=' ')
+            if verbose: print(f" complete in {time.time()-tic}s")
             
         return gillespy2.Results(ret_traj)
 
