@@ -36,7 +36,7 @@ class Simulation:
         if min(Devils[400:]) == 0.0:
             self.devil_extinction += 1
     
-    def __load_prob_sims(self, sim_count):
+    def __load_dask_sims(self, sim_count):
         if self.kwargs is None:
             self.configure()
         prob_sims = []
@@ -45,36 +45,12 @@ class Simulation:
             prob_sims.append(sim_thread)
         return prob_sims
     
-    def __output_dftd_devils_props(self, return_probs, print_probs=True):
-        if return_probs:
-            return self.dftd_elimination, self.devil_extinction
+    def output_dftd_devils_props(self, return_probs, print_probs=True):
         if print_probs:
             print(f"DFTD elimination: {self.dftd_elimination}%")
             print(f"Devil extinction: {self.devil_extinction}%")
-        return
+        return self.dftd_elimination, self.devil_extinction
     
-    def compute_dftd_devils_probs(self, verbose=True, return_probs=False, print_probs=True):
-        if verbose: print(self.variables)
-        if self.dftd_elimination is not None and self.devil_extinction is not None:
-            return self.__output_dftd_devils_props(return_probs, print_probs)
-        sim_count = 100
-        self.dftd_elimination = 0
-        self.devil_extinction = 0
-        if self.result is not None:
-            sim_count -= 1
-            Dftd = self.__compute_dftd_prob(self.result)
-            self.__compute_devil_prob(self.result, Dftd)
-        prob_sims = self.__load_prob_sims(sim_count)
-        prob_results = compute(*prob_sims)
-        failed_attempts = 0
-        for (result, attempts) in prob_results:
-            if verbose: print(".", end='')
-            Dftd = self.__compute_dftd_prob(result)
-            self.__compute_devil_prob(result, Dftd)
-            failed_attempts += attempts
-        if verbose: print(f"'\nFailed Attempts: {failed_attempts}")
-        self.__output_dftd_devils_props(return_probs, print_probs)
-        
     def configure(self, solver=None):
         self.kwargs = {
             "number_of_trajectories": 1
@@ -201,11 +177,21 @@ class Simulation:
     def run(self, return_results=False, use_existing_results=False, verbose=False):
         if self.result is not None and use_existing_results:
             return
-                
-        run = delayed(self.model.run)(**self.kwargs)
-        result, attempts = run.compute()
-        if verbose: print(f"Failed Attempts: {attempts}")
+        
+        dask_sims = self.__load_dask_sims(100)
+        dask_results = compute(*dask_sims)
+        
+        failed_attempts = 0
+        self.dftd_elimination = 0
+        self.devil_extinction = 0
+        for (result, attempts) in dask_results:
+            if verbose: print(".", end='')
+            Dftd = self.__compute_dftd_prob(result)
+            self.__compute_devil_prob(result, Dftd)
+            failed_attempts += attempts
+        
+        if verbose: print(f"'\nFailed Attempts: {failed_attempts}")
         if return_results:
-            return result
-        self.result = result
+            return dask_results[0][0]
+        self.result = dask_results[0][0]
         return self

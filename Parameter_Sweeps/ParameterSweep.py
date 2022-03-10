@@ -29,6 +29,7 @@ class ParameterSweep():
         
         self.result_keys = []
         self.simulations = []
+        self.load_data_job = []
 
     def __get_result_key(self, variables):
         elements = []
@@ -47,7 +48,7 @@ class ParameterSweep():
             result_key = self.__get_result_key(variables=variables)
             if result_key not in self.results:
                 if verbose:
-                    message = f'running: {result_key.replace(":", "=").replace(",", ", ")}'
+                    message = f'adding job: {result_key.replace(":", "=").replace(",", ", ")}'
                     print(message)
                 tmp_sim = Simulation(model=self.model, variables=copy.deepcopy(variables))
                 tmp_sim.configure(solver=solver)
@@ -56,25 +57,6 @@ class ParameterSweep():
                 self.simulations.append(sim_thread)
                 self.result_keys.append(result_key)
                 
-    def __load_data(self, tpp, keys, count, verbose=False):
-        if len(keys) == (len(self.params) - 1):
-            self.get_devil_dftd_extinction_over_param(res_sub_keys=keys, verbose=verbose)
-            print(".", end="")
-            count += 1
-        else:
-            param = self.params[len(keys)]
-            for val in param['range']:
-                tp = len(keys) == 0 and len(self.params) <= 5
-                mp = len(keys) == len(self.params) - 5
-                if count > 0 and (tp or mp):
-                    complete = round(count/tpp*100, 2)
-                    print(f"{complete}% completed.")
-                sub_key = f"{param['parameter']}:{val}"
-                new_keys = keys.copy()
-                new_keys.append(sub_key)
-                count = self.__load_data(tpp, new_keys, count, verbose=verbose)
-        return count
-    
     def __run(self):
         self.results.update(dict(zip(self.result_keys, compute(*self.simulations))))
 
@@ -222,8 +204,7 @@ class ParameterSweep():
             inner_devils = []
             for value2 in params[0]['range']:
                 key = _key.replace("__param1__", "{0}:{1}".format(params[0]['parameter'], value2))
-                dftd_prob, devil_prob = self.results[key].compute_dftd_devils_probs(verbose=False,
-                                                                                    return_probs=True)
+                dftd_prob, devil_prob = self.results[key].output_dftd_devils_props(return_probs=True)
                 inner_dftd.append(dftd_prob)
                 inner_devils.append(devil_prob)
             dftd.append(inner_dftd)
@@ -232,7 +213,7 @@ class ParameterSweep():
     
     def get_devil_dftd_extinction_over_param(self, res_sub_keys, key=None, return_data=False, verbose=False):
         if len(self.params) < 2:
-            sims = self.results.values()
+            keys = self.results.keys()
         elif (len(self.params) - len(res_sub_keys)) != 1:
             raise Exception(f"res_sub_keys[{len(self.params)}] must be set.")
         else:
@@ -243,29 +224,17 @@ class ParameterSweep():
                     if sub_key in res_key.split(","):
                         keys.append(res_key)
                 _keys = keys
-            sims = [self.results[key] for key in keys]
             
         pl_values = []
         pl_ext_rate = []
         pl_erd_rate = []
-        for sim in sims:
-            if not return_data:
-                _ = sim.compute_dftd_devils_probs(verbose=verbose, print_probs=False)
-            else:
-                pl_values.append(sim.variables[key])
-                dftd_prob, devil_prob = sim.compute_dftd_devils_probs(verbose=verbose, return_probs=True)
-                pl_ext_rate.append(devil_prob)
-                pl_erd_rate.append(dftd_prob)
-        if return_data:
-            return pl_values, pl_erd_rate, pl_ext_rate
+        for res_key in keys:
+            pl_values.append(self.results[res_key].variables[key])
+            dftd_prob, devil_prob = self.results[res_key].output_dftd_devils_props(return_probs=True)
+            pl_ext_rate.append(devil_prob)
+            pl_erd_rate.append(dftd_prob)
+        return pl_values, pl_erd_rate, pl_ext_rate
         
-    
-    def load_data(self, verbose=False):
-        tpp = 1
-        for param in self.params:
-            tpp *= len(param['range'])
-        self.__load_data(tpp, [], 0, verbose=verbose)
-    
     @classmethod
     def load_state(cls, state):
         job = ParameterSweep(model=state.model, params=state.params)
