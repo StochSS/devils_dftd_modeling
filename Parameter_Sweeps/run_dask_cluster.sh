@@ -1,8 +1,9 @@
 cd 'devils_dftd_modeling/Parameter_Sweeps'
-python3 -m venv dask_venv
-source dask_venv/bin/activate
-pip install gillespy2
-pip install dask[distributed]
+screen                           # or screen -r if you have already started screen
+python3 -m venv dask_venv        # 1st time only
+source dask_venv/bin/activate   
+pip install gillespy2            # 1st time only
+pip install dask[distributed]    # 1st time only
 python
 
 from dask.distributed import LocalCluster
@@ -12,9 +13,12 @@ host='james.cs.unca.edu',
 scheduler_port=12345,
 dashboard_address=None,
 processes=True,
-n_workers=45, 
+n_workers=55, 
 threads_per_worker=1
 )
 
-#cluster.adapt(minimum=1, maximum=45)  # Allows the cluster to auto scale to 50 when tasks are computed
+cluster.adapt(minimum=1, maximum=55)  # Allows the cluster to auto scale to 55 when tasks are computed
+
+# Ctl-A Ctl-D  to "detach" and keep it running
+# Ctl-D to end python process/dask
 
