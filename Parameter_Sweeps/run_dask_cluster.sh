@@ -1,9 +1,10 @@
 cd 'devils_dftd_modeling/Parameter_Sweeps'
-screen                           # or screen -r if you have already started screen
+screen                           # or "screen -r" if you have already started screen and want to re-attach
 python3 -m venv dask_venv        # 1st time only
-source dask_venv/bin/activate   
+source dask_venv/bin/activate    # each time you start screen (not if you do "screen -r")
 pip install gillespy2            # 1st time only
 pip install dask[distributed]    # 1st time only
+
 python
 
 from dask.distributed import LocalCluster
