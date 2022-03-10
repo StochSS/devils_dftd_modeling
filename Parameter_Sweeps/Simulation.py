@@ -45,10 +45,11 @@ class Simulation:
             prob_sims.append(sim_thread)
         return prob_sims
     
-    def output_dftd_devils_props(self, return_probs, print_probs=True):
+    def output_dftd_devils_props(self, print_probs=False):
         if print_probs:
             print(f"DFTD elimination: {self.dftd_elimination}%")
             print(f"Devil extinction: {self.devil_extinction}%")
+            return
         return self.dftd_elimination, self.devil_extinction
     
     def configure(self, solver=None):

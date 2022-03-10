@@ -58,7 +58,11 @@ class ParameterSweep():
                 self.result_keys.append(result_key)
                 
     def __run(self):
-        self.results.update(dict(zip(self.result_keys, compute(*self.simulations))))
+        results = dict(zip(self.result_keys, compute(*self.simulations)))
+        if self.results:
+            self.results.update(results)
+        else:
+            self.results = results
 
     def build_layout(self, ai_widgets):
         ai_widgets = list(ai_widgets.values())
@@ -204,7 +208,7 @@ class ParameterSweep():
             inner_devils = []
             for value2 in params[0]['range']:
                 key = _key.replace("__param1__", "{0}:{1}".format(params[0]['parameter'], value2))
-                dftd_prob, devil_prob = self.results[key].output_dftd_devils_props(return_probs=True)
+                dftd_prob, devil_prob = self.results[key].output_dftd_devils_props()
                 inner_dftd.append(dftd_prob)
                 inner_devils.append(devil_prob)
             dftd.append(inner_dftd)
@@ -230,7 +234,7 @@ class ParameterSweep():
         pl_erd_rate = []
         for res_key in keys:
             pl_values.append(self.results[res_key].variables[key])
-            dftd_prob, devil_prob = self.results[res_key].output_dftd_devils_props(return_probs=True)
+            dftd_prob, devil_prob = self.results[res_key].output_dftd_devils_props()
             pl_ext_rate.append(devil_prob)
             pl_erd_rate.append(dftd_prob)
         return pl_values, pl_erd_rate, pl_ext_rate
