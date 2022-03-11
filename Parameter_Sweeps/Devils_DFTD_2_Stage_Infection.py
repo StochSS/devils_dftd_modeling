@@ -35,6 +35,7 @@ class DevilsDFTD2StageInfection(Model):
         immunity = "immunity" in interventions
         vaccination = "vaccination" in interventions
         culling = "culling" in interventions
+        print(immunity)
         
         Model.__init__(self, name="Devils DFTD 2-Stage Infection with Vaccination")
         self.volume = 1
@@ -179,13 +180,18 @@ class DevilsDFTD2StageInfection(Model):
             reactants={'Infected': 1}, products={'Diseased': 1},
             propensity_function="Infected / progression"
         )
+        transD_prop = "infection_rate_diseased * Susceptible * Diseased"
+        transI_prop = "infection_rate_infected * Susceptible * Infected"
+        if immunity:
+            transD_prop += " * (1.0 - immunity_level / 100.0)"
+            transD_prop += " * (1.0 - immunity_level / 100.0)"
         TransmissionD = Reaction(name="TransmissionD",
             reactants={'Susceptible': 1, 'Diseased': 1}, products={'Exposed': 1, 'Diseased': 1},
-            propensity_function="infection_rate_diseased * Susceptible * Diseased"
+            propensity_function=transD_prop
         )
         TransmissionI = Reaction(name="TransmissionI",
             reactants={'Susceptible': 1, 'Infected': 1}, products={'Exposed': 1, 'Infected': 1},
-            propensity_function="infection_rate_infected * Susceptible * Infected"
+            propensity_function=transD_prop
         )
         self.add_reaction([
             Birth, Mature, Death_Diseased, Death_Diseased2, Death_Exposed, Death_Exposed2, Death_Infected,

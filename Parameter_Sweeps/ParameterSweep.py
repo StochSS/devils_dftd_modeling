@@ -208,7 +208,7 @@ class ParameterSweep():
             inner_devils = []
             for value2 in params[0]['range']:
                 key = _key.replace("__param1__", "{0}:{1}".format(params[0]['parameter'], value2))
-                dftd_prob, devil_prob = self.results[key].output_dftd_devils_props()
+                dftd_prob, devil_prob = self.results[key].output_dftd_devils_probs()
                 inner_dftd.append(dftd_prob)
                 inner_devils.append(devil_prob)
             dftd.append(inner_dftd)
@@ -234,7 +234,7 @@ class ParameterSweep():
         pl_erd_rate = []
         for res_key in keys:
             pl_values.append(self.results[res_key].variables[key])
-            dftd_prob, devil_prob = self.results[res_key].output_dftd_devils_props()
+            dftd_prob, devil_prob = self.results[res_key].output_dftd_devils_probs()
             pl_ext_rate.append(devil_prob)
             pl_erd_rate.append(dftd_prob)
         return pl_values, pl_erd_rate, pl_ext_rate

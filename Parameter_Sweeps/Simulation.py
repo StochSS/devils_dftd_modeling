@@ -45,7 +45,7 @@ class Simulation:
             prob_sims.append(sim_thread)
         return prob_sims
     
-    def output_dftd_devils_props(self, print_probs=False):
+    def output_dftd_devils_probs(self, print_probs=False):
         if print_probs:
             print(f"DFTD elimination: {self.dftd_elimination}%")
             print(f"Devil extinction: {self.devil_extinction}%")
@@ -83,7 +83,15 @@ class Simulation:
         text_offset = (self.result['time'].size - start) / 601
         
         fig, ax1 = plt.subplots(figsize=[15, 8])
-        plt.title("Tasmanian Devil Population with DFTD: Vaccination Program", fontsize=18)
+        interventions = []
+        if "immunity_start" in self.result.model.listOfParameters:
+            interventions.append("Immunity")
+        if "Vaccinated" in self.result[0].data:
+            interventions.append("Vaccination")
+        if "culling_start" in self.result.model.listOfParameters:
+            interventions.append("Culling")
+        interventions = " + ".join(interventions)
+        plt.title(f"Tasmanian Devil Population with DFTD: {interventions} Program", fontsize=18)
         ax1.set_xlabel(f"Time (months) since {dates[start]}", fontsize=14)
         ax1.set_ylabel("Population of Tasmanian Devils", fontsize=14)
         ax1.plot(x, total_devils[start:], color='blue', label='Total Devils')
