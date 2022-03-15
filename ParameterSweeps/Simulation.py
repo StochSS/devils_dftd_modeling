@@ -70,7 +70,7 @@ class Simulation:
         sim.devil_extinction = state.devil_extinction
         return sim
     
-    def plot(self, start=0, alpha=0.3, plot_observed=False, plot_immunity_level=True):
+    def plot(self, start=0, alpha=0.3, plot_observed=False, plot_immunity_level=True, save_fig=None):
         carry_cap = int(max(devil_pop)*1.16)
         dftd_start = int(self.result.model.listOfParameters['DFTD_introduction'].value)
         
@@ -182,6 +182,9 @@ class Simulation:
         ax1.tick_params(axis='y',labelsize=12, labelrotation=90)
         ax1.legend(loc='upper right', fontsize=12)
         fig.tight_layout()
+        
+        if save_fig is not None:
+            plt.savefig(save_fig)
     
     def run(self, return_results=False, use_existing_results=False, verbose=False):
         if self.result is not None and use_existing_results:
