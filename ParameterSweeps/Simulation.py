@@ -88,13 +88,16 @@ class Simulation:
         fig, ax1 = plt.subplots(figsize=[15, 8])
         interventions = []
         if "immunity_start" in self.result.model.listOfParameters:
-            interventions.append("Immunity")
+            interventions.append("Natural Immunity")
         if "Vaccinated" in self.result[0].data:
             interventions.append("Vaccination")
         if "culling_start" in self.result.model.listOfParameters:
             interventions.append("Culling")
-        interventions = " + ".join(interventions)
-        plt.title(f"Tasmanian Devil Population with DFTD: {interventions} Program", fontsize=18)
+        if interventions:
+            title = f"Tasmanian Devil Population with DFTD and {' + '.join(interventions)} Intervention"
+        else:
+            title = "Tasmanian Devil Population with DFTD and No Intervention"
+        plt.title(title, fontsize=18)
         ax1.set_xlabel(f"Time (months) since {dates[start]}", fontsize=14)
         ax1.set_ylabel("Population of Tasmanian Devils", fontsize=14)
         ax1.plot(x, total_devils[start:], color='blue', label='Total Devils')
