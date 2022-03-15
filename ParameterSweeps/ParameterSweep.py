@@ -142,7 +142,7 @@ class ParameterSweep():
         elif len(params) == 2:
             base_key = self.get_base_key(list(widget_args.values())[::2], params)
             dftd, devils = self.get_plot_data(params, base_key)
-            self.display_plots(params, dftd, devils)
+            self.display_plots(params, *dftd, *devils)
         else:
             labels = units_labels['labels']
             units = units_labels['units']
@@ -166,7 +166,7 @@ class ParameterSweep():
             print(", ".join(fixed))
         return params, [param.replace(": ", ":") for param in fixed]
     
-    def display_plots(self, params, dftd, devils):
+    def display_plots(self, params, dftd, dftd_cflip, devils, devils_cflip):
         labels = units_labels['labels']
         units = units_labels['units']
         x_units = units[params[0]['parameter']]
@@ -195,7 +195,8 @@ class ParameterSweep():
         ax1.figure.colorbar(im1, ax=ax1)
         for i in range(len(dftd)):
             for j in range(len(dftd[0])):
-                _ = ax1.text(j, i, f"{dftd[i, j]}%", ha="center", va="center", color="w", fontsize=12)
+                color = "black" if dftd[i, j] > dftd_cflip else "w"
+                _ = ax1.text(j, i, f"{dftd[i, j]}%", ha="center", va="center", color=color, fontsize=12)
 
         im2 = ax2.imshow(devils)
         ax2.set_xticks(np.arange(len(devils[0])))
@@ -210,7 +211,8 @@ class ParameterSweep():
         ax2.figure.colorbar(im2, ax=ax2)
         for i in range(len(devils)):
             for j in range(len(devils[0])):
-                _ = ax2.text(j, i, f"{devils[i, j]}%", ha="center", va="center", color="w", fontsize=12)
+                color = "black" if devils[i, j] > devils_cflip else "w"
+                _ = ax2.text(j, i, f"{devils[i, j]}%", ha="center", va="center", color=color, fontsize=12)
     
     def explore_results(self, plot_observed=False):
         self.plot_observed = plot_observed
@@ -239,7 +241,9 @@ class ParameterSweep():
     
     def get_plot_data(self, params, base_key):
         dftd = []
+        dftd_lim = [100, 0]
         devils = []
+        devils_lim = [100, 0]
         for value1 in params[1]['range']:
             _key = base_key.replace("__param2__", f"{params[1]['parameter']}:{value1}")
             inner_dftd = []
@@ -249,9 +253,19 @@ class ParameterSweep():
                 dftd_prob, devil_prob = self.results[key].output_dftd_devils_probs()
                 inner_dftd.append(dftd_prob)
                 inner_devils.append(devil_prob)
+            if min(inner_dftd) < dftd_lim[0]:
+                dftd_lim[0] = min(inner_dftd)
+            if max(inner_dftd) > dftd_lim[1]:
+                dftd_lim[1] = max(inner_dftd)
+            if min(inner_devils) < devils_lim[0]:
+                devils_lim[0] = min(inner_devils)
+            if max(inner_devils) > devils_lim[1]:
+                devils_lim[1] = max(inner_devils)
             dftd.append(inner_dftd)
             devils.append(inner_devils)
-        return np.array(dftd), np.array(devils)
+        dftd_cflip = dftd_lim[1] - ((dftd_lim[1] - dftd_lim[0]) * 0.3)
+        devils_cflip = devils_lim[1] - ((devils_lim[1] - devils_lim[0]) * 0.3)
+        return (np.array(dftd), dftd_cflip), (np.array(devils), devils_cflip)
     
     def get_devil_dftd_extinction_over_param(self, res_sub_keys, key=None, return_data=False, verbose=False):
         if len(self.params) < 2:
