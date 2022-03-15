@@ -35,7 +35,6 @@ class DevilsDFTD2StageInfection(Model):
         immunity = "immunity" in interventions
         vaccination = "vaccination" in interventions
         culling = "culling" in interventions
-        print(immunity)
         
         Model.__init__(self, name="Devils DFTD 2-Stage Infection with Vaccination")
         self.volume = 1

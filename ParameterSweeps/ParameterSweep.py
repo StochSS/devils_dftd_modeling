@@ -1,3 +1,4 @@
+import os
 import copy
 import json
 import numpy as np
@@ -18,7 +19,10 @@ while len(dates) < 1001:
         dates.append(f"{month} {year}")
     year += 1
 
-with open("./units_labels.json", "r") as ul_file:
+ul_path = "units_labels.json"
+if not os.path.exists(ul_path):
+    ul_path = f"ParameterSweeps/{ul_path}"
+with open(ul_path, "r") as ul_file:
     units_labels = json.load(ul_file)
 
 class ParameterSweep():

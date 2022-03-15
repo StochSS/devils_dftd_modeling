@@ -4,7 +4,10 @@ import matplotlib.pyplot as plt
 
 from dask import delayed, compute
 
-pop_data = pd.read_csv('../Devils_Dataset__Population_1985-2020.csv')
+try:
+    pop_data = pd.read_csv('../Devils_Dataset__Population_1985-2020.csv')
+except:
+    pop_data = pd.read_csv('./Devils_Dataset__Population_1985-2020.csv')
 devil_pop = np.array(pop_data['Population'].iloc[:].values)
 
 dates = []
