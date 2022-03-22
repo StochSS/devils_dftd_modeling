@@ -48,6 +48,13 @@ class Simulation:
             prob_sims.append(sim_thread)
         return prob_sims
     
+    def __get_x_ticklabels(self):
+        x_ticks = list(range(0, 1000, 120))
+        x_ticklabels = []
+        for i in x_ticks:
+            x_ticklabels.append(dates[i][4:])
+        return x_ticks, x_ticklabels
+    
     def output_dftd_devils_probs(self, print_probs=False):
         if print_probs:
             print(f"DFTD elimination: {self.dftd_elimination}%")
@@ -98,7 +105,7 @@ class Simulation:
         else:
             title = "Tasmanian Devil Population with DFTD and No Intervention"
         plt.title(title, fontsize=18)
-        ax1.set_xlabel(f"Time (months) since {dates[start]}", fontsize=14)
+#         ax1.set_xlabel(f"Time (months) since {dates[start]}", fontsize=14)
         ax1.set_ylabel("Population of Tasmanian Devils", fontsize=14)
         ax1.plot(x, total_devils[start:], color='blue', label='Total Devils')
         ax1.plot(x, self.result['Juvenile'][start:], color='purple', alpha=alpha, label='Juvenile')
@@ -184,6 +191,9 @@ class Simulation:
         
         ax1.set_ylim(-3000, carry_cap)
         ax1.set_xlim(-5, 1005)
+        x_ticks, x_ticklabels = self.__get_x_ticklabels()
+        ax1.set_xticks(x_ticks)
+        ax1.set_xticklabels(x_ticklabels)
         ax1.tick_params(axis='x', labelsize=12)
         ax1.tick_params(axis='y',labelsize=12, labelrotation=90)
         ax1.legend(loc='upper right', fontsize=12)
@@ -192,7 +202,7 @@ class Simulation:
         if save_fig is not None:
             plt.savefig(save_fig)
     
-    def run(self, return_results=False, use_existing_results=False, verbose=False):
+    def run(self, return_results=False, use_existing_results=False, verbose=False, success=False):
         if self.result is not None and use_existing_results:
             return
         
@@ -205,11 +215,18 @@ class Simulation:
         for (result, attempts) in dask_results:
             if verbose: print(".", end='')
             Dftd = self.__compute_dftd_prob(result)
+            print(min(Dftd[400:]))
+            if success and min(Dftd[400:]) == 0.0 and self.result is None:
+                self.result = result
             self.__compute_devil_prob(result, Dftd)
             failed_attempts += attempts
         
         if verbose: print(f"'\nFailed Attempts: {failed_attempts}")
-        if return_results:
+        if self.result is None and return_results:
             return dask_results[0][0]
-        self.result = dask_results[0][0]
+        if return_results:
+            return self.result
+        if self.result is None:
+            self.result = dask_results[0][0]
         return self
+        
