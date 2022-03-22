@@ -1,6 +1,7 @@
 import os
 import copy
 import json
+import pickle
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -26,11 +27,13 @@ with open(ul_path, "r") as ul_file:
     units_labels = json.load(ul_file)
 
 class ParameterSweep():
-    def __init__(self, model, params=None):
+    def __init__(self, model, params=None, batch_size=100, statefile=""):
         self.model = model
         self.params = params
         self.results = {}
         
+        self.batch_size = batch_size
+        self.statefile = statefile
         self.result_keys = []
         self.simulations = []
         self.load_data_job = []
@@ -58,24 +61,33 @@ class ParameterSweep():
                 tmp_sim.configure(solver=solver)
                 tmp_sim.kwargs['variables'] = variables.copy()
                 sim_thread = delayed(tmp_sim.run)(verbose=verbose)
-                self.simulations.append(sim_thread)
-                self.result_keys.append(result_key)
+                batch = len(self.simulations)
+                if batch == 0 or len(self.simulations[batch-1]) == self.batch_size:
+                    self.simulations.append([sim_thread])
+                    self.result_keys.append([result_key])
+                else:
+                    self.simulations[batch-1].append(sim_thread)
+                    self.result_keys[batch-1].append(result_key)
                 
     def __run(self):
-        results = dict(zip(self.result_keys, compute(*self.simulations)))
-        if self.results:
-            unsorted_keys = list(self.results.keys())
-            unsorted_keys.extend(list(results.keys()))
-            keys = self.__sort_keys(unsorted_keys)
-            new_results = {}
-            for key in keys:
-                if key in results:
-                    new_results[key] = results[key]
-                else:
-                    new_results[key] = self.results[key]
-            self.results = new_results
-        else:
-            self.results = results
+        for i, batch in enumerate(self.simulations):
+            results = dict(zip(self.result_keys[i], compute(*batch)))
+            if self.results:
+                unsorted_keys = list(self.results.keys())
+                unsorted_keys.extend(list(results.keys()))
+                keys = self.__sort_keys(unsorted_keys)
+                new_results = {}
+                for key in keys:
+                    if key in results:
+                        new_results[key] = results[key]
+                    else:
+                        new_results[key] = self.results[key]
+                self.results = new_results
+            else:
+                self.results = results
+            with open(f".tmp_result_state-{self.statefile}", "w") as trs:
+                pickle.dump(self.results, trs)
+        os.remove(f".tmp_result_state-{self.statefile}")
 
     @classmethod
     def __sort_keys(cls, keys):
@@ -296,8 +308,13 @@ class ParameterSweep():
         return pl_values, pl_erd_rate, pl_ext_rate
         
     @classmethod
-    def load_state(cls, state):
-        job = ParameterSweep(model=state.model, params=state.params)
+    def load_state(cls, state, batch_size=None, statefile=None):
+        if batch_size is None:
+            batch_size = 100 if not hasattr(state, "batch_size") else state.batch_size
+        if statefile is None:
+            statefile = "" if not hasattr(state, "statefile") else state.statefile
+        
+        job = ParameterSweep(model=state.model, params=state.params, batch_size=batch_size, statefile=statefile)
         keys = cls.__sort_keys(state.results.keys())
         for key in keys:
             job.results[key] = Simulation.load_state(state.results[key])
@@ -328,7 +345,7 @@ class ParameterSweep():
         ax2.set_xlabel(f"{param_label}{units}", fontsize=14)
         ax2.set_ylabel("Devil extinction probability", fontsize=14)
 
-    def run(self, solver=None, params=None, verbose=False):
+    def run(self, batch_size, statefile, solver=None, params=None, verbose=False):
         self.result_keys = []
         self.simulations = []
         
