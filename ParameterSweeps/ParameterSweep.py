@@ -26,13 +26,13 @@ if not os.path.exists(ul_path):
 with open(ul_path, "r") as ul_file:
     units_labels = json.load(ul_file)
 
-def sort_fn(res_key):
-    sub_keys = keys.split(",")
+def sort_fn(res_keys):
+    sub_keys = res_keys.split(",")
     key_mults = [100**i for i in range(len(sub_keys))]
-    int_key = 0
+    float_key = 0
     for i, sub_key in enumerate(sub_keys):
-        int_key += key_mults[i] * int(sub_key.split(":")[1])
-    return int_key
+        float_key += key_mults[i] * float(sub_key.split(":")[1])
+    return float_key
 
 class ParameterSweep():
     def __init__(self, model, params=None, batch_size=100, statefile=""):
@@ -47,7 +47,9 @@ class ParameterSweep():
         self.load_data_job = []
 
     def __get_estimated_time(self, sims=None):
-        if sims is None:
+        if len(self.simulations) == 0:
+            t_time = 0
+        elif sims is None:
             t_time = 135 * self.batch_size
         else:
             t_time = 135 * sims
