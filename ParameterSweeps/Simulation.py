@@ -52,7 +52,7 @@ class Simulation:
         x_ticks = list(range(0, 1000, 120))
         x_ticklabels = []
         for i in x_ticks:
-            x_ticklabels.append(dates[i][4:])
+            x_ticklabels.append(dates[i])
         return x_ticks, x_ticklabels
     
     def output_dftd_devils_probs(self, print_probs=False):
@@ -206,6 +206,9 @@ class Simulation:
         if self.result is not None and use_existing_results:
             return
         
+        if success:
+            self.result = None
+        
         dask_sims = self.__load_dask_sims(100)
         dask_results = compute(*dask_sims)
         
@@ -215,7 +218,6 @@ class Simulation:
         for (result, attempts) in dask_results:
             if verbose: print(".", end='')
             Dftd = self.__compute_dftd_prob(result)
-            print(min(Dftd[400:]))
             if success and min(Dftd[400:]) == 0.0 and self.result is None:
                 self.result = result
             self.__compute_devil_prob(result, Dftd)

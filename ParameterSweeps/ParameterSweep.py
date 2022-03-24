@@ -85,9 +85,8 @@ class ParameterSweep():
                 self.results = new_results
             else:
                 self.results = results
-            with open(f".tmp_result_state-{self.statefile}", "w") as trs:
+            with open(f"tmp_result_state/{self.statefile}-{i}", "wb") as trs:
                 pickle.dump(self.results, trs)
-        os.remove(f".tmp_result_state-{self.statefile}")
 
     @classmethod
     def __sort_keys(cls, keys):
@@ -345,7 +344,7 @@ class ParameterSweep():
         ax2.set_xlabel(f"{param_label}{units}", fontsize=14)
         ax2.set_ylabel("Devil extinction probability", fontsize=14)
 
-    def run(self, batch_size, statefile, solver=None, params=None, verbose=False):
+    def run(self, solver=None, params=None, verbose=False):
         self.result_keys = []
         self.simulations = []
         
