@@ -26,6 +26,14 @@ if not os.path.exists(ul_path):
 with open(ul_path, "r") as ul_file:
     units_labels = json.load(ul_file)
 
+def sort_fn(res_key):
+    sub_keys = keys.split(",")
+    key_mults = [100**i for i in range(len(sub_keys))]
+    int_key = 0
+    for i, sub_key in enumerate(sub_keys):
+        int_key += key_mults[i] * int(sub_key.split(":")[1])
+    return int_key
+
 class ParameterSweep():
     def __init__(self, model, params=None, batch_size=100, statefile=""):
         self.model = model
@@ -37,6 +45,21 @@ class ParameterSweep():
         self.result_keys = []
         self.simulations = []
         self.load_data_job = []
+
+    def __get_estimated_time(self, sims=None):
+        if sims is None:
+            t_time = 135 * self.batch_size
+        else:
+            t_time = 135 * sims
+        secs = t_time % 60
+        t_time = (t_time - secs) / 60
+        mins = t_time % 60
+        t_time = (t_time - mins) / 60
+        if t_time < 24:
+            return f"{t_time} hrs {mins} mins {secs} secs"
+        hours = t_time % 24
+        t_time = (t_time - hours) / 24
+        return f"{t_time} days {hours} hrs {mins} mins {secs} secs"
 
     def __get_result_key(self, variables):
         elements = []
@@ -70,12 +93,17 @@ class ParameterSweep():
                     self.result_keys[batch-1].append(result_key)
                 
     def __run(self):
+        total_sims = 0 if len(self.simulations) == 0 else self.batch_size * (len(self.simulations) - 1) + len(self.simulations[-1])
+        print(f"Running {total_sims} new parameter points", end=" ")
+        print(f"in {len(self.simulations)} batches with {self.batch_size} points per batch")
+        print(f"Estimated time to completion per batch: {self.__get_estimated_time()}")
+        print(f"Total estimated time to completion: {self.__get_estimated_time(sims=total_sims)}")
         for i, batch in enumerate(self.simulations):
             results = dict(zip(self.result_keys[i], compute(*batch)))
             if self.results:
-                unsorted_keys = list(self.results.keys())
-                unsorted_keys.extend(list(results.keys()))
-                keys = self.__sort_keys(unsorted_keys)
+                keys = list(self.results.keys())
+                keys.extend(list(results.keys()))
+                keys.sort(key=sort_fn)
                 new_results = {}
                 for key in keys:
                     if key in results:
@@ -88,35 +116,6 @@ class ParameterSweep():
             with open(f"tmp_result_state/{self.statefile}-{i}", "wb") as trs:
                 pickle.dump(self.results, trs)
 
-    @classmethod
-    def __sort_keys(cls, keys):
-        sort_map = {f"vacc_program_length:{i}": f"vacc_program_length:0{i}" for i in range(1, 10)}
-        sort_map.update({f"cull_program_length:{i}": f"cull_program_length:0{i}" for i in range(1, 10)})
-        sort_map.update({f"immunity_max_level:{i}": f"immunity_max_level:0{i}" for i in range(50, 100, 5)})
-        rsort_map = {}
-        for key, val in sort_map.items():
-            rsort_map[val] = key
-
-        unsorted_keys = []
-        for key in keys:
-            sub_keys = []
-            for sub_key in key.split(','):
-                if sub_key in sort_map:
-                    sub_key = sort_map[sub_key]
-                sub_keys.append(sub_key)
-            unsorted_keys.append(','.join(sub_keys))
-        unsorted_keys.sort()
-
-        sorted_keys = []
-        for key in unsorted_keys:
-            sub_keys = []
-            for sub_key in key.split(','):
-                if sub_key in rsort_map:
-                    sub_key = rsort_map[sub_key]
-                sub_keys.append(sub_key)
-            sorted_keys.append(','.join(sub_keys))
-        return sorted_keys
-    
     def build_layout(self, ai_widgets):
         ai_widgets = list(ai_widgets.values())
         hbs = []
@@ -314,7 +313,8 @@ class ParameterSweep():
             statefile = "" if not hasattr(state, "statefile") else state.statefile
         
         job = ParameterSweep(model=state.model, params=state.params, batch_size=batch_size, statefile=statefile)
-        keys = cls.__sort_keys(state.results.keys())
+        keys = list(state.results.keys())
+        keys.sort(key=sort_fn)
         for key in keys:
             job.results[key] = Simulation.load_state(state.results[key])
         return job
