@@ -28,8 +28,6 @@ def load_existing_state(state_path):
 	    job = ParameterSweep.load_state(state['job'], batch_size=150, statefile=state_path)
 		return model, sim, job
 
-    print("No existing vaccination + culling state found.")
-
     model = DevilsDFTD2StageInfection(devil_pop, interventions=["vaccination", "culling"])
     sim = Simulation(model=model)
     job = ParameterSweep(model=model, batch_size=150, statefile=state_path)
@@ -54,6 +52,10 @@ def run_parameter_sweep__vacc_cull():
 	    {"parameter": "cull_rate_diseased", "range": [0.25, 0.5, 0.75]},
 	    {"parameter": "cull_program_length", "range": [3, 5, 6, 7, 8, 9, 10, 11]}
 	]
+	total_param_points = 1
+	for param in params:
+	    total_param_points *= len(param['range'])
+	print(f"Size of the Parameter Space: {total_param_points}")
 
 	job.run(solver=sol, params=params)
 
