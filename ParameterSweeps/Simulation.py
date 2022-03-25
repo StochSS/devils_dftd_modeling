@@ -48,7 +48,7 @@ class Simulation:
             prob_sims.append(sim_thread)
         return prob_sims
     
-    def __get_x_ticklabels(self):
+    def _get_x_ticklabels(self):
         x_ticks = list(range(0, 1000, 120))
         x_ticklabels = []
         for i in x_ticks:
@@ -191,7 +191,7 @@ class Simulation:
         
         ax1.set_ylim(-3000, carry_cap)
         ax1.set_xlim(-5, 1005)
-        x_ticks, x_ticklabels = self.__get_x_ticklabels()
+        x_ticks, x_ticklabels = self._get_x_ticklabels()
         ax1.set_xticks(x_ticks)
         ax1.set_xticklabels(x_ticklabels)
         ax1.tick_params(axis='x', labelsize=12)
@@ -202,7 +202,7 @@ class Simulation:
         if save_fig is not None:
             plt.savefig(save_fig)
     
-    def run(self, return_results=False, use_existing_results=False, verbose=False, success=False):
+    def run(self, return_results=False, use_existing_results=False, verbose=False, success=False, store_all_results=False):
         if self.result is not None and use_existing_results:
             return
         
@@ -217,10 +217,18 @@ class Simulation:
         self.devil_extinction = 0
         for (result, attempts) in dask_results:
             if verbose: print(".", end='')
+            
+            if store_all_results:
+                if self.result is None:
+                    self.result = result
+                else:
+                    self.result += result
+                    
             Dftd = self.__compute_dftd_prob(result)
             if success and min(Dftd[400:]) == 0.0 and self.result is None:
                 self.result = result
             self.__compute_devil_prob(result, Dftd)
+            
             failed_attempts += attempts
         
         if verbose: print(f"'\nFailed Attempts: {failed_attempts}")
