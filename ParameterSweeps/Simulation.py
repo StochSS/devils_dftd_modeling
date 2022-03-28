@@ -1,3 +1,9 @@
+import os
+import sys
+sys.path.insert(1, os.path.abspath(os.path.join(os.getcwd(), '../../GillesPy2')))
+
+from gillespy2 import Results
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -202,41 +208,85 @@ class Simulation:
         if save_fig is not None:
             plt.savefig(save_fig)
     
-    def run(self, return_results=False, use_existing_results=False, verbose=False, success=False, store_all_results=False):
-        if self.result is not None and use_existing_results:
-            return
-        
-        if success:
-            self.result = None
-        
-        dask_sims = self.__load_dask_sims(100)
-        dask_results = compute(*dask_sims)
-        
-        failed_attempts = 0
+    def __process_results(self, results, success=False):
         self.dftd_elimination = 0
         self.devil_extinction = 0
-        for (result, attempts) in dask_results:
-            if verbose: print(".", end='')
-            
-            if store_all_results:
-                if self.result is None:
-                    self.result = result
-                else:
-                    self.result += result
-                    
+
+        s_result = None        
+        for result in results:
             Dftd = self.__compute_dftd_prob(result)
-            if success and min(Dftd[400:]) == 0.0 and self.result is None:
-                self.result = result
+            if success and s_result is None and min(Dftd[400:]) == 0.0:
+                s_result = result
             self.__compute_devil_prob(result, Dftd)
-            
+        return s_result
+
+    def __run(self, verbose=False):
+        dask_sims = self.__load_dask_sims(100)
+        dask_results = compute(*dask_sims)
+
+        failed_attempts = dask_results[0][1]
+        results = dask_results[0][0]
+        if verbose: print(".", end='')
+        for (result, attempts) in dask_results[1:]:
             failed_attempts += attempts
+            results += result
+            if verbose: print(".", end='')
+        return results, failed_attempts
+
+    def __run_full_result(self, use_existing_results=False, verbose=False):
+        if self.result is not None and len(self.result.data) == 100 and use_existing_results:
+            return
+
+        if self.result is not None and len(self.result.data) != 100:
+            self.result = None
+
+        results, failed_attempts = self.__run(verbose=verbose)
+        self.__process_results(results)
+
+        if verbose:
+            print(f"'\nFailed Attempts: {sum(failed_attempts)}")
+
+        return results
+
+    def __run_sigle_result(self, use_existing_results=False, verbose=False):
+        if self.result is not None and use_existing_results:
+            return
+
+        results, failed_attempts = self.__run(verbose=verbose)
+        self.__process_results(results)
+
+        if verbose:
+            print(f"'\nFailed Attempts: {sum(failed_attempts)}")
+
+        return results[0]
+
+    def __run_success_result(self, use_existing_results=False, verbose=False):
+        if self.result is not None and use_existing_results:
+            Dftd = self.__compute_dftd_prob(self.result)
+            if min(Dftd[400:]) == 0.0:
+                return
+
+        if self.result is not None:
+            self.result = None
+
+        results, failed_attempts = self.__run(verbose=verbose)
         
-        if verbose: print(f"'\nFailed Attempts: {failed_attempts}")
-        if self.result is None and return_results:
-            return dask_results[0][0]
+        if verbose:
+            print(f"'\nFailed Attempts: {sum(failed_attempts)}")
+
+        results = self.__process_results(results, success=True)
+        return Results([results])
+
+    def run(self, return_results=False, use_existing_results=False, verbose=False, success=False, store_all_results=False):
+        if store_all_results:
+            results = self.__run_full_result(use_existing_results=use_existing_results, verbose=verbose)
+        elif success:
+            results = self.__run_success_result(use_existing_results=use_existing_results, verbose=verbose)
+        else:
+            results = self.__run_sigle_result(use_existing_results=use_existing_results, verbose=verbose)
+
         if return_results:
-            return self.result
-        if self.result is None:
-            self.result = dask_results[0][0]
+            return results
+        if self.result is None or not use_existing_results:
+            self.result = results
         return self
-        
