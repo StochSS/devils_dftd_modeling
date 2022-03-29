@@ -1,1 +1,77 @@
-{"parameters": [{"name": "cull_rate_diseased", "range": [0.25, 0.5, 0.75]}, {"name": "cull_program_length", "range": [3, 5, 6, 7, 8, 9, 10, 11]}], "elimination_probs": {"cull_rate_diseased:0.25,cull_program_length:3": 0, "cull_rate_diseased:0.5,cull_program_length:3": 0, "cull_rate_diseased:0.75,cull_program_length:3": 0, "cull_rate_diseased:0.25,cull_program_length:5": 0, "cull_rate_diseased:0.5,cull_program_length:5": 0, "cull_rate_diseased:0.75,cull_program_length:5": 0, "cull_rate_diseased:0.25,cull_program_length:6": 0, "cull_rate_diseased:0.5,cull_program_length:6": 0, "cull_rate_diseased:0.75,cull_program_length:6": 0, "cull_rate_diseased:0.25,cull_program_length:7": 0, "cull_rate_diseased:0.5,cull_program_length:7": 0, "cull_rate_diseased:0.75,cull_program_length:7": 0, "cull_rate_diseased:0.25,cull_program_length:8": 0, "cull_rate_diseased:0.5,cull_program_length:8": 0, "cull_rate_diseased:0.75,cull_program_length:8": 0, "cull_rate_diseased:0.25,cull_program_length:9": 0, "cull_rate_diseased:0.5,cull_program_length:9": 0, "cull_rate_diseased:0.75,cull_program_length:9": 0, "cull_rate_diseased:0.25,cull_program_length:10": 0, "cull_rate_diseased:0.5,cull_program_length:10": 0, "cull_rate_diseased:0.75,cull_program_length:10": 0, "cull_rate_diseased:0.25,cull_program_length:11": 0, "cull_rate_diseased:0.5,cull_program_length:11": 0, "cull_rate_diseased:0.75,cull_program_length:11": 0}, "extinction_probs": {"cull_rate_diseased:0.25,cull_program_length:3": 0, "cull_rate_diseased:0.5,cull_program_length:3": 0, "cull_rate_diseased:0.75,cull_program_length:3": 0, "cull_rate_diseased:0.25,cull_program_length:5": 0, "cull_rate_diseased:0.5,cull_program_length:5": 0, "cull_rate_diseased:0.75,cull_program_length:5": 0, "cull_rate_diseased:0.25,cull_program_length:6": 0, "cull_rate_diseased:0.5,cull_program_length:6": 0, "cull_rate_diseased:0.75,cull_program_length:6": 0, "cull_rate_diseased:0.25,cull_program_length:7": 0, "cull_rate_diseased:0.5,cull_program_length:7": 0, "cull_rate_diseased:0.75,cull_program_length:7": 0, "cull_rate_diseased:0.25,cull_program_length:8": 0, "cull_rate_diseased:0.5,cull_program_length:8": 0, "cull_rate_diseased:0.75,cull_program_length:8": 0, "cull_rate_diseased:0.25,cull_program_length:9": 0, "cull_rate_diseased:0.5,cull_program_length:9": 0, "cull_rate_diseased:0.75,cull_program_length:9": 0, "cull_rate_diseased:0.25,cull_program_length:10": 0, "cull_rate_diseased:0.5,cull_program_length:10": 0, "cull_rate_diseased:0.75,cull_program_length:10": 0, "cull_rate_diseased:0.25,cull_program_length:11": 0, "cull_rate_diseased:0.5,cull_program_length:11": 0, "cull_rate_diseased:0.75,cull_program_length:11": 0}}
+{
+    "elimination_probs": {
+        "cull_rate_diseased:0.25,cull_program_length:10": 0,
+        "cull_rate_diseased:0.25,cull_program_length:11": 0,
+        "cull_rate_diseased:0.25,cull_program_length:3": 0,
+        "cull_rate_diseased:0.25,cull_program_length:5": 0,
+        "cull_rate_diseased:0.25,cull_program_length:6": 0,
+        "cull_rate_diseased:0.25,cull_program_length:7": 0,
+        "cull_rate_diseased:0.25,cull_program_length:8": 0,
+        "cull_rate_diseased:0.25,cull_program_length:9": 0,
+        "cull_rate_diseased:0.5,cull_program_length:10": 0,
+        "cull_rate_diseased:0.5,cull_program_length:11": 0,
+        "cull_rate_diseased:0.5,cull_program_length:3": 0,
+        "cull_rate_diseased:0.5,cull_program_length:5": 0,
+        "cull_rate_diseased:0.5,cull_program_length:6": 0,
+        "cull_rate_diseased:0.5,cull_program_length:7": 0,
+        "cull_rate_diseased:0.5,cull_program_length:8": 0,
+        "cull_rate_diseased:0.5,cull_program_length:9": 0,
+        "cull_rate_diseased:0.75,cull_program_length:10": 0,
+        "cull_rate_diseased:0.75,cull_program_length:11": 0,
+        "cull_rate_diseased:0.75,cull_program_length:3": 0,
+        "cull_rate_diseased:0.75,cull_program_length:5": 0,
+        "cull_rate_diseased:0.75,cull_program_length:6": 0,
+        "cull_rate_diseased:0.75,cull_program_length:7": 0,
+        "cull_rate_diseased:0.75,cull_program_length:8": 0,
+        "cull_rate_diseased:0.75,cull_program_length:9": 0
+    },
+    "extinction_probs": {
+        "cull_rate_diseased:0.25,cull_program_length:10": 0,
+        "cull_rate_diseased:0.25,cull_program_length:11": 0,
+        "cull_rate_diseased:0.25,cull_program_length:3": 0,
+        "cull_rate_diseased:0.25,cull_program_length:5": 0,
+        "cull_rate_diseased:0.25,cull_program_length:6": 0,
+        "cull_rate_diseased:0.25,cull_program_length:7": 0,
+        "cull_rate_diseased:0.25,cull_program_length:8": 0,
+        "cull_rate_diseased:0.25,cull_program_length:9": 0,
+        "cull_rate_diseased:0.5,cull_program_length:10": 0,
+        "cull_rate_diseased:0.5,cull_program_length:11": 0,
+        "cull_rate_diseased:0.5,cull_program_length:3": 0,
+        "cull_rate_diseased:0.5,cull_program_length:5": 0,
+        "cull_rate_diseased:0.5,cull_program_length:6": 0,
+        "cull_rate_diseased:0.5,cull_program_length:7": 0,
+        "cull_rate_diseased:0.5,cull_program_length:8": 0,
+        "cull_rate_diseased:0.5,cull_program_length:9": 0,
+        "cull_rate_diseased:0.75,cull_program_length:10": 0,
+        "cull_rate_diseased:0.75,cull_program_length:11": 0,
+        "cull_rate_diseased:0.75,cull_program_length:3": 0,
+        "cull_rate_diseased:0.75,cull_program_length:5": 0,
+        "cull_rate_diseased:0.75,cull_program_length:6": 0,
+        "cull_rate_diseased:0.75,cull_program_length:7": 0,
+        "cull_rate_diseased:0.75,cull_program_length:8": 0,
+        "cull_rate_diseased:0.75,cull_program_length:9": 0
+    },
+    "parameters": [
+        {
+            "name": "cull_rate_diseased",
+            "range": [
+                0.25,
+                0.5,
+                0.75
+            ]
+        },
+        {
+            "name": "cull_program_length",
+            "range": [
+                3,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11
+            ]
+        }
+    ]
+}
