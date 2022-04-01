@@ -2,6 +2,10 @@
 
 ## Open Links
  > Open links may fail due to out dated github tokens
+ 
+## Figure Notebooks
+ - Figure 3: [Parameter_Fitting.ipynb](https://open.stochss.org?open=https://raw.githubusercontent.com/StochSS/devils_dftd_modeling/develop/Parameter_Fitting.ipynb)
+ - Figure 14: [Parameter_Fitting.ipynb](https://open.stochss.org?open=https://raw.githubusercontent.com/StochSS/devils_dftd_modeling/develop/Parameter_Fitting.ipynb)
 
 ### DFTD Pre-Vaccination
  - [Devils DFTD 2-Stage Infection.mdl](https://open.stochss.org?open=https://raw.githubusercontent.com/StochSS/devils_dftd_modeling/develop/Devils%20DFTD%202-Stage%20Infection.mdl?token=AKUOBDQQI3QSVUK5O4ZUF3LBRETXK)
