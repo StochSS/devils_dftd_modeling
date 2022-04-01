@@ -10,6 +10,7 @@
  - Figure 6: [DFTD_Elimination_Results.ipynb](https://github.com/StochSS/devils_dftd_modeling/blob/develop/DFTDElimination/DFTD_Elimination_Results.ipynb)
  - Figure 7: [Devils_DFTD-Culling_Simulations.ipynb](https://github.com/StochSS/devils_dftd_modeling/blob/develop/Devils_DFTD-Culling_Simulations.ipynb)
  - Figure 8: [DFTD_Elimination_Results.ipynb](https://github.com/StochSS/devils_dftd_modeling/blob/develop/DFTDElimination/DFTD_Elimination_Results.ipynb)
+ - Figure 10: [Devils_DFTD-Vaccination_Simulations.ipynb](https://github.com/StochSS/devils_dftd_modeling/blob/develop/Devils_DFTD-Vaccination_Simulations.ipynb)
  - Figure 11: [DFTD_Elimination_Results.ipynb](https://github.com/StochSS/devils_dftd_modeling/blob/develop/DFTDElimination/DFTD_Elimination_Results.ipynb)
  - Figure 14: [Parameter_Fitting.ipynb](https://github.com/StochSS/devils_dftd_modeling/blob/develop/Parameter_Fitting.ipynb)
 
