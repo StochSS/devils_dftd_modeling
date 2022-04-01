@@ -7,6 +7,9 @@
  - Figure 3: [Parameter_Fitting.ipynb](https://open.stochss.org?open=https://raw.githubusercontent.com/StochSS/devils_dftd_modeling/develop/Parameter_Fitting.ipynb)
  - Figure 4: [Devils_DFTD-No_Intervention_Simulations.ipynb](https://open.stochss.org?open=https://raw.githubusercontent.com/StochSS/devils_dftd_modeling/develop/Devils_DFTD-No_Intervention_Simulations.ipynb)
  - Figure 5: [Devils_DFTD-Immunity_Simulations.ipynb](https://open.stochss.org?open=https://raw.githubusercontent.com/StochSS/devils_dftd_modeling/develop/Devils_DFTD-Immunity_Simulations.ipynb)
+ - Figure 6: [DFTD_Elimination_Results.ipynb](https://open.stochss.org?open=https://raw.githubusercontent.com/StochSS/devils_dftd_modeling/develop/DFTDElimination/DFTD_Elimination_Results.ipynb)
+ - Figure 8: [DFTD_Elimination_Results.ipynb](https://open.stochss.org?open=https://raw.githubusercontent.com/StochSS/devils_dftd_modeling/develop/DFTDElimination/DFTD_Elimination_Results.ipynb)
+ - Figure 11: [DFTD_Elimination_Results.ipynb](https://open.stochss.org?open=https://raw.githubusercontent.com/StochSS/devils_dftd_modeling/develop/DFTDElimination/DFTD_Elimination_Results.ipynb)
  - Figure 14: [Parameter_Fitting.ipynb](https://open.stochss.org?open=https://raw.githubusercontent.com/StochSS/devils_dftd_modeling/develop/Parameter_Fitting.ipynb)
 
 ### DFTD Pre-Vaccination
