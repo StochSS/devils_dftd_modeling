@@ -5,6 +5,7 @@
  
 ## Figure Notebooks
  - Figure 3: [Parameter_Fitting.ipynb](https://open.stochss.org?open=https://raw.githubusercontent.com/StochSS/devils_dftd_modeling/develop/Parameter_Fitting.ipynb)
+ - Figure 4: [Devils_DFTD-No_Intervention_Simulations.ipynb](https://open.stochss.org?open=https://raw.githubusercontent.com/StochSS/devils_dftd_modeling/develop/Devils_DFTD-No_Intervention_Simulations.ipynb)
  - Figure 14: [Parameter_Fitting.ipynb](https://open.stochss.org?open=https://raw.githubusercontent.com/StochSS/devils_dftd_modeling/develop/Parameter_Fitting.ipynb)
 
 ### DFTD Pre-Vaccination
