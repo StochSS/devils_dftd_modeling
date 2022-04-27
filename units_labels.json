@@ -1,0 +1,38 @@
+{
+    "units": {
+        "immunity_growth_rate": "",
+        "immunity_max_level": "%",
+        "immunity_start": "month",
+        "vaccinated_infection_rate": "",
+        "vacc_program_length": "years",
+        "vaccination_proportion": "",
+        "vaccine_frequency": "times per year",
+        "cull_rate_diseased": "",
+        "cull_program_length": "years",
+        "cull_rate_infected": ""
+    },
+    "labels": {
+        "immunity_growth_rate": "Immunity Growth Rate",
+        "immunity_max_level": "Immunity Max Level",
+        "immunity_start": "Immunity Start",
+        "vaccinated_infection_rate": "Vaccine Failure Rate",
+        "vacc_program_length": "Vaccine Program Length",
+        "vaccination_proportion": "Vaccination Propportion",
+        "vaccine_frequency": "Vaccine Frequency",
+        "cull_rate_diseased": "Cull Rate Diseased",
+        "cull_program_length": "Culling Program Length",
+        "cull_rate_infected": "Cull Rate Infected"
+    },
+    "w_labels": {
+        "immunity_growth_rate": "Imm. Gwth. R.",
+        "immunity_max_level": "Imm Max Lvl",
+        "immunity_start": "Imm. Start",
+        "vaccinated_infection_rate": "Vacc. Fail R.",
+        "vaccination_proportion": "Vacc. Prop.",
+        "vaccine_frequency": "Vacc. Freq.",
+        "vacc_program_length": "Vacc. Prog. Len.",
+        "cull_rate_diseased": "Dis. Cull R.",
+        "cull_rate_infected": "Inf. Cull R.",
+        "cull_program_length": "Cull Prog. Len."
+    }
+}
