@@ -1,8 +1,9 @@
 # devils_dftd_modeling
 
-## Open Links
- > Open links may fail due to out dated github tokens
- 
+### Devils Project
+This is a StochSS project.  Click this link to upload this project into your free account on StochSS _Live!_ (https://live.stochss.org)
+ - [SavingTheDevilsIsInTheDetails.zip](https://open.stochss.org?open=https://github.com/StochSS/devils_dftd_modeling/raw/develop/SavingTheDevilsIsInTheDetails.zip)
+
 ## Figure Notebooks
  - Figure 3A: [Devils-Parameter_Fitting.ipynb](https://github.com/StochSS/devils_dftd_modeling/blob/develop/Devils-Parameter_Fitting.ipynb)
  - Figure 3B: [Devils_DFTD-Parameter_Fitting.ipynb](https://github.com/StochSS/devils_dftd_modeling/blob/develop/Devils_DFTD-Parameter_Fitting.ipynb)
@@ -17,6 +18,3 @@
  - Figure 13: [Devils_DFTD-Parameter_Sweep_Heatmaps.ipynb](https://github.com/StochSS/devils_dftd_modeling/blob/develop/Devils_DFTD-Parameter_Sweep_Heatmaps.ipynb)
  - Figure 14A: [Devils-Parameter_Fitting.ipynb](https://github.com/StochSS/devils_dftd_modeling/blob/develop/Devils-Parameter_Fitting.ipynb)
  - Figure 14B and C: [Devils_DFTD-Parameter_Fitting.ipynb](https://github.com/StochSS/devils_dftd_modeling/blob/develop/Devils_DFTD-Parameter_Fitting.ipynb)
-
-### Devils Project
- - [SavingTheDevilsIsInTheDetails.zip](https://open.stochss.org?open=https://github.com/StochSS/devils_dftd_modeling/raw/develop/SavingTheDevilsIsInTheDetails.zip)
