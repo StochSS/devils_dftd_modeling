@@ -2,7 +2,7 @@
 
 ### Devils Project
 This is a StochSS project.  Click this link to upload this project into your free account on StochSS _Live!_ (https://live.stochss.org)
- - [SavingTheDevilsIsInTheDetails.zip](https://open.stochss.org?open=https://github.com/StochSS/devils_dftd_modeling/raw/develop/SavingTheDevilsIsInTheDetails.zip)
+ - [SavingTheDevilsIsInTheDetails.zip](https://open.stochss.org?open=https://github.com/StochSS/devils_dftd_modeling/raw/main/SavingTheDevilsIsInTheDetails.zip)
 
 ## Figure Notebooks
  - Figure 3A: [Devils-Parameter_Fitting.ipynb](https://github.com/StochSS/devils_dftd_modeling/blob/develop/Devils-Parameter_Fitting.ipynb)
